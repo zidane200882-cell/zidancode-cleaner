@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZidanCode Cleaner - أداة الموبايل</title>
+  <style>
+    body { font-family: Tahoma, Arial, sans-serif; background: #0b1120; color: #e2e8f0; margin: 0; padding: 16px; }
+    .box { max-width: 600px; margin: 0 auto; background: #0f172a; border: 1px solid #38bdf8; border-radius: 14px; padding: 20px; }
+    h1 { color: #38bdf8; font-size: 22px; margin: 0 0 8px; text-align: center; }
+    p.sub { color: #94a3b8; font-size: 14px; text-align: center; margin: 0 0 20px; }
+    input[type="file"] { width: 100%; padding: 12px; background: #1e293b; border: 1px dashed #38bdf8; border-radius: 10px; color: #fff; box-sizing: border-box; margin-bottom: 14px; }
+    button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+    .btn-clean { background: #38bdf8; color: #0f172a; }
+    .btn-dl { background: #4ade80; color: #0f172a; display: none; }
+    .status { text-align: center; color: #4ade80; font-size: 14px; margin: 10px 0; font-weight: bold; }
+    .preview { background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 12px; margin-top: 14px; font-size: 13px; overflow-x: auto; display: none; }
+    .preview h3 { margin: 0 0 8px; font-size: 15px; color: #38bdf8; }
+    pre { margin: 0; white-space: pre-wrap; color: #cbd5e1; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>ZidanCode Cleaner</h1>
+    <p class="sub">نسخة الموبايل السريعة — تنظيف ملفات CSV في ثانيتين</p>
+
+    <input type="file" id="csvFile" accept=".csv,.txt">
+    <button class="btn-clean" onclick="cleanCSV()">تنظيف وتحسين الملف الآن</button>
+    <div id="status" class="status"></div>
+    <button id="dlBtn" class="btn-dl" onclick="downloadCSV()">تحميل الملف النظيف (CSV)</button>
+
+    <div id="previewBox" class="preview">
+      <h3>معاينة سريعة (قبل / بعد):</h3>
+      <pre id="previewText"></pre>
+    </div>
+  </div>
+
+  <script>
+    let cleanedContent = "";
+    let originalName = "cleaned_products.csv";
+
+    function cleanLine(text) {
+      return text
+        .replace(/[*#~`_]+/g, "")
+        .replace(/\b(ج\.م|جنيه مصري|جنيه|جم|LE|L\.E|Egp)\b/gi, "EGP")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+    }
+
+    function cleanCSV() {
+      const fileInput = document.getElementById("csvFile");
+      if (!fileInput.files.length) {
+        alert("من فضلك اختر ملف CSV أولاً.");
+        return;
+      }
+      const file = fileInput.files[0];
+      originalName = "ZidanCode_Clean_" + file.name;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const rawLines = e.target.result.split(/\r?\n/).filter(l => l.trim() !== "");
+        const cleanLines = rawLines.map(line =>
+          line.split(",").map(cell => cleanLine(cell)).join(",")
+        );
+
+        cleanedContent = "\uFEFF" + cleanLines.join("\r\n");
+        document.getElementById("status").innerText = "تم تنظيف " + cleanLines.length + " صف بنجاح وجاهز للإعلانات!";
+        document.getElementById("dlBtn").style.display = "block";
+
+        let sample = "قبل:\n" + rawLines.slice(0, 3).join("\n") + "\n\nبعد:\n" + cleanLines.slice(0, 3).join("\n");
+        document.getElementById("previewText").innerText = sample;
+        document.getElementById("previewBox").style.display = "block";
+      };
+      reader.readAsText(file, "UTF-8");
+    }
+
+    function downloadCSV() {
+      const blob = new Blob([cleanedContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = originalName;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
