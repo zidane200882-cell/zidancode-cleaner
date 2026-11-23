@@ -157,25 +157,34 @@
 
       <div class="reg-pay-grid">
         <div class="reg-card">
-          <h3>📝 الخطوة 1: سجّل الآن لتفعيل خصم الافتتاح والانضمام لقائمة الرواد</h3>
-          <p class="hint">سجّل بياناتك لتحصل على كود خصم الافتتاح (750 ج.م بدل 1,750 ج.م)، وليصلك إشعار فوري بأحدث منتجاتنا الصناعية والبرمجية القادمة.</p>
-          <form onsubmit="registerPioneer(event)">
-            <div class="form-group"><label>الاسم بالكامل أو اسم الشركة / المصنع:</label><input type="text" id="pName" required placeholder="مثال: أحمد محمود / شركة النور"></div>
-            <div class="form-group"><label>رقم الواتساب للتواصل وإرسال العروض والتحديثات:</label><input type="tel" id="pPhone" required placeholder="مثال: 010xxxxxxxx"></div>
-            <div class="form-group">
-              <label>مجال عملك أو المشروع الذي تهتم بتطويره معنا:</label>
-              <select id="pSector">
-                <option value="تجارة إلكترونية وتسويق رقمي">تجارة إلكترونية وتسويق رقمي (باقة الـ 5 تطبيقات)</option>
-                <option value="صناعة وخطوط إنتاج وقطع غيار">قطاع صناعي / خطوط إنتاج / توطين قطع غيار</option>
-                <option value="إدارة شركات وأتمتة أعمال">إدارة شركات وأتمتة أعمال مخصصة</option>
-                <option value="دراسة مشروع جديد أو استشارة هندسية">طلب دراسة مشروع خاص أو ابتكار جديد</option>
-              </select>
-            </div>
-            <button type="submit" class="reg-submit">سجّل واغتنم عرض الافتتاح (750 ج.م) الآن ⬅️</button>
-          </form>
+          <h3>⚡ الخطوة 1: سجّل الآن لتفعيل خصم الافتتاح (750 ج.م بدل 1,750 ج.م)</h3>
+          
+          <!-- المسار السريع: تسجيل بضغطة واحدة بالجيميل للزوار والتجار -->
+          <div style="background:rgba(15,28,54,0.9);border:1px solid #38bdf8;border-radius:14px;padding:16px;margin-bottom:16px;">
+            <div style="color:#38bdf8;font-weight:bold;font-size:15px;margin-bottom:6px;">🚀 تسجيل سريع بضغطة واحدة (للمتاجر والمسوقين والزوار):</div>
+            <p style="margin:0 0 10px;font-size:13px;color:#cbd5e1;">بدون كتابة اسم أو عنوان أو رقم هاتف — أدخل بريدك (Gmail) واضغط لتفعيل كود الخصم فوراً:</p>
+            <form onsubmit="quickGmailRegister(event)" style="display:flex;gap:8px;flex-wrap:wrap;">
+              <input type="email" id="quickGmail" name="email" autocomplete="email" required placeholder="اضغط لاختيار بريدك (example@gmail.com)" style="flex:1;min-width:210px;margin:0;direction:ltr;text-align:left;">
+              <button type="submit" class="reg-submit" style="width:auto;padding:11px 18px;font-size:14.5px;display:flex;align-items:center;gap:8px;">
+                <span style="background:#fff;color:#ea4335;font-weight:900;padding:2px 7px;border-radius:5px;">G</span> احجز بـ Gmail فوراً ⬅️
+              </button>
+            </form>
+          </div>
+
+          <!-- المسار الصناعي: نموذج مفصل لأصحاب المصانع والشركات الكبرى -->
+          <details style="background:rgba(10,18,36,0.85);border:1px solid #fbbf24;border-radius:14px;padding:14px 16px;">
+            <summary style="cursor:pointer;color:#fbbf24;font-weight:bold;font-size:14.5px;list-style:none;">🏭 لأصحاب المصانع والشركات: طلب دراسة مشروع صناعي أو تطوير خطوط إنتاج ⬇️</summary>
+            <form onsubmit="industrialRegister(event)" style="margin-top:14px;">
+              <div class="form-group"><label>اسم المصنع / الشركة والمسؤول:</label><input type="text" id="indName" required placeholder="مثال: مصنع النيل للبلاستيك - م. طارق"></div>
+              <div class="form-group"><label>رقم الهاتف / الواتساب للتواصل الهندسي:</label><input type="tel" id="indPhone" required placeholder="010xxxxxxxx"></div>
+              <div class="form-group"><label>المنطقة الصناعية وتفاصيل المشروع / خط الإنتاج:</label><input type="text" id="indDetails" required placeholder="مثال: 6 أكتوبر - أتمتة خط إنتاج / توطين قطع غيار"></div>
+              <button type="submit" class="reg-submit" style="background:linear-gradient(135deg,#0284c7,#0369a1);color:#fff;">إرسال طلب الدراسة الهندسية للمصنع ⬅️</button>
+            </form>
+          </details>
+
           <div class="vip-ticket" id="vipTicket">
-            <div style="color:#86efac;font-weight:bold;font-size:15px;">✅ تم تسجيلك بنجاح في قائمة رواد ZidanCode Maestro!</div>
-            <div style="font-size:13px;color:#e2e8f0;margin-top:4px;">كود تفعيل خصم الافتتاح الخاص بك:</div>
+            <div style="color:#86efac;font-weight:bold;font-size:15px;" id="ticketTitle">✅ تم تسجيلك بنجاح في قائمة رواد ZidanCode Maestro!</div>
+            <div style="font-size:13px;color:#e2e8f0;margin-top:4px;">كود الحجز والتفعيل الخاص بك:</div>
             <strong class="code" id="vipCodeDisplay">VIP-750</strong>
             <div style="font-size:12.5px;color:#cbd5e1;">اضغط على الزر الأخضر بالأسفل لإرسال حجزك لواتساب المبيعات فوراً:</div>
             <a class="wa-btn" id="directWaLink" href="#" target="_blank">إرسال كود الحجز إلى واتساب المبيعات (01090724210) 💬</a>
@@ -244,7 +253,35 @@ function draw(){ctx.clearRect(0,0,w,h);for(let i=0;i<particles.length;i++){let p
 const LAUNCH_KEY='zc_maestro_launch_end';let endTime=localStorage.getItem(LAUNCH_KEY);if(!endTime){endTime=Date.now()+15*24*60*60*1000;localStorage.setItem(LAUNCH_KEY,endTime);}
 function updateCountdown(){const diff=Math.max(0,endTime-Date.now());document.getElementById('cd-days').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');document.getElementById('cd-hours').textContent=String(Math.floor((diff/3600000)%24)).padStart(2,'0');document.getElementById('cd-mins').textContent=String(Math.floor((diff/60000)%60)).padStart(2,'0');document.getElementById('cd-secs').textContent=String(Math.floor((diff/1000)%60)).padStart(2,'0');}setInterval(updateCountdown,1000);updateCountdown();
 
-function registerPioneer(e){e.preventDefault();const name=document.getElementById('pName').value.trim(),phone=document.getElementById('pPhone').value.trim(),sector=document.getElementById('pSector').value,vipCode='VIP-750-'+Math.floor(1000+Math.random()*9000);const list=JSON.parse(localStorage.getItem('zc_pioneers_db')||'[]');list.push({name,phone,sector,vipCode,date:new Date().toISOString()});localStorage.setItem('zc_pioneers_db',JSON.stringify(list));document.getElementById('vipCodeDisplay').textContent=vipCode;const waMsg=`أهلاً ZidanCode Maestro،%0Aسجلت في قائمة الرواد لاغتنام *عرض الافتتاح (750 ج.م)*:%0A• الاسم: ${encodeURIComponent(name)}%0A• الموبايل: ${encodeURIComponent(phone)}%0A• المجال: ${encodeURIComponent(sector)}%0A• كود الحجز: ${vipCode}`;document.getElementById('directWaLink').href=`https://wa.me/201090724210?text=${waMsg}`;document.getElementById('vipTicket').style.display='block';}
+function quickGmailRegister(e){
+  e.preventDefault();
+  const email = document.getElementById('quickGmail').value.trim();
+  const vipCode = 'VIP-750-' + Math.floor(1000 + Math.random() * 9000);
+  const list = JSON.parse(localStorage.getItem('zc_pioneers_db') || '[]');
+  list.push({ type: 'GMAIL_FAST', email, vipCode, date: new Date().toISOString() });
+  localStorage.setItem('zc_pioneers_db', JSON.stringify(list));
+  document.getElementById('ticketTitle').textContent = '✅ تم حجز عرض الافتتاح (750 ج.م) بحساب Gmail بنجاح!';
+  document.getElementById('vipCodeDisplay').textContent = vipCode;
+  const waMsg = `أهلاً ZidanCode Maestro،%0Aحجزت *عرض الافتتاح (750 ج.م)* بالتسجيل السريع:%0A• البريد: ${encodeURIComponent(email)}%0A• كود الحجز: ${vipCode}`;
+  document.getElementById('directWaLink').href = `https://wa.me/201090724210?text=${waMsg}`;
+  document.getElementById('vipTicket').style.display = 'block';
+}
+
+function industrialRegister(e){
+  e.preventDefault();
+  const name = document.getElementById('indName').value.trim();
+  const phone = document.getElementById('indPhone').value.trim();
+  const details = document.getElementById('indDetails').value.trim();
+  const vipCode = 'IND-PRO-' + Math.floor(1000 + Math.random() * 9000);
+  const list = JSON.parse(localStorage.getItem('zc_pioneers_db') || '[]');
+  list.push({ type: 'INDUSTRIAL_PROJECT', name, phone, details, vipCode, date: new Date().toISOString() });
+  localStorage.setItem('zc_pioneers_db', JSON.stringify(list));
+  document.getElementById('ticketTitle').textContent = '✅ تم تسجيل طلب الدراسة الهندسية لمصنعك وسيتم الرد خلال 48 ساعة!';
+  document.getElementById('vipCodeDisplay').textContent = vipCode;
+  const waMsg = `أهلاً ZidanCode Maestro،%0Aطلب *دراسة مشروع صناعي / تطوير خطوط إنتاج*:%0A• المنشأة: ${encodeURIComponent(name)}%0A• الهاتف: ${encodeURIComponent(phone)}%0A• التفاصيل: ${encodeURIComponent(details)}%0A• كود الملف: ${vipCode}`;
+  document.getElementById('directWaLink').href = `https://wa.me/201090724210?text=${waMsg}`;
+  document.getElementById('vipTicket').style.display = 'block';
+});localStorage.setItem('zc_pioneers_db',JSON.stringify(list));document.getElementById('vipCodeDisplay').textContent=vipCode;const waMsg=`أهلاً ZidanCode Maestro،%0Aسجلت في قائمة الرواد لاغتنام *عرض الافتتاح (750 ج.م)*:%0A• الاسم: ${encodeURIComponent(name)}%0A• الموبايل: ${encodeURIComponent(phone)}%0A• المجال: ${encodeURIComponent(sector)}%0A• كود الحجز: ${vipCode}`;document.getElementById('directWaLink').href=`https://wa.me/201090724210?text=${waMsg}`;document.getElementById('vipTicket').style.display='block';}
 </script>
 </body>
 </html>
