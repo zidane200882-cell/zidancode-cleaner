@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظف ومصلح ملفات CSV | ZidanCode Suite</title>
+    <style>
+        :root { --bg: #0b0f19; --card: #151c2c; --border: #2a364f; --primary: #10b981; --text: #f3f4f6; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+        .upload-area { border: 2px dashed var(--border); padding: 40px; text-align: center; margin-bottom: 20px; cursor: pointer; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        #status { margin-top: 20px; color: #38bdf8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>منظف ومصلح ملفات CSV</h2>
+        <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            اضغط لاختيار ملف CSV
+            <input type="file" id="fileInput" hidden accept=".csv">
+        </div>
+        <div id="status"></div>
+        <button id="processBtn" style="display:none">تنزيل الملف المصلح (UTF-8 BOM)</button>
+    </div>
+
+    <script>
+        let processedData = null;
+        const fileInput = document.getElementById('fileInput');
+        const processBtn = document.getElementById('processBtn');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const text = event.target.result;
+                const lines = text.split(/\r?\n/);
+                const uniqueLines = Array.from(new Set(lines.filter(l => l.trim() !== "")));
+                processedData = uniqueLines.join('\r\n');
+                document.getElementById('status').innerText = `تمت المعالجة: تم حذف ${lines.length - uniqueLines.length} صف مكرر.`;
+                processBtn.style.display = 'block';
+            };
+            reader.readAsText(file);
+        });
+
+        processBtn.addEventListener('click', function() {
+            const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            const blob = new Blob([bom, processedData], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cleaned_data_fixed.csv';
+            a.click();
+        });
+    </script>
+
+    <style>
+      #zcDemoBanner {
+        position: fixed; bottom: 0; left: 0; right: 0; background: #0f172a; border-top: 2px solid #38bdf8;
+        color: #f8fafc; padding: 10px 18px; display: flex; align-items: center; justify-content: space-between;
+        z-index: 999998; font-family: Tahoma, sans-serif; direction: rtl; box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
+      }
+      #zcDemoBanner button {
+        background: #16a34a; color: #fff; border: none; padding: 8px 16px; border-radius: 8px;
+        font-weight: bold; cursor: pointer; font-size: 14px;
+      }
+      #zcUnlockModal {
+        display: none; position: fixed; inset: 0; background: rgba(7,13,25,0.92); z-index: 999999;
+        align-items: center; justify-content: center; font-family: Tahoma, sans-serif; direction: rtl;
+      }
+      .zc-box {
+        background: #0f172a; border: 2px solid #38bdf8; border-radius: 14px; padding: 24px;
+        max-width: 440px; width: 92%; text-align: center; color: #f8fafc;
+      }
+    </style>
+    <div id="zcDemoBanner">
+      <span>🧪 <b>وضع التجربة المجانية (Demo):</b> يمكنك تجربة الأداة الآن — النسخة الكاملة بـ <b>350 ج.م</b></span>
+      <button onclick="openZcUnlock()">🔓 تفعيل النسخة الكاملة</button>
+    </div>
+    <div id="zcUnlockModal">
+      <div class="zc-box">
+        <h3 style="color:#38bdf8;margin-top:0;">🔑 تفعيل النسخة الكاملة مدى الحياة</h3>
+        <p style="font-size:13px;color:#cbd5e1;">ابعت كود بصمة جهازك على واتساب <b>+201090724210</b> لاستلام مفتاح التفعيل:</p>
+        <div id="zcDevShow" style="background:#070d19;border:1px dashed #fbbf24;color:#fbbf24;padding:8px;border-radius:6px;font-family:monospace;font-size:16px;margin:10px 0;user-select:all;"></div>
+        <input id="zcKeyField" type="text" placeholder="ZC-XXXX-XXXX-XXXX" style="width:92%;padding:10px;border-radius:6px;border:1px solid #475569;background:#070d19;color:#4ade80;text-align:center;font-family:monospace;font-size:15px;margin-bottom:10px;">
+        <div style="display:flex;gap:8px;">
+          <button onclick="activateZcNow()" style="flex:1;background:#0284c7;color:#fff;border:none;padding:10px;border-radius:6px;font-weight:bold;cursor:pointer;">تفعيل الآن ✅</button>
+          <button onclick="document.getElementById('zcUnlockModal').style.display='none'" style="background:#334155;color:#fff;border:none;padding:10px 14px;border-radius:6px;cursor:pointer;">إغلاق</button>
+        </div>
+        <p id="zcStatusTxt" style="color:#f87171;font-size:12px;margin-top:8px;"></p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.onkeydown = e => { if (e.keyCode == 123) return false; };
+      (async function() {
+        const prodCode = "STORE_CSV_CLEANER";
+        let devId = localStorage.getItem('zc_dev_id');
+        if (!devId) {
+          devId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+          localStorage.setItem('zc_dev_id', devId);
+        }
+        document.getElementById('zcDevShow').textContent = devId;
+
+        const enc = new TextEncoder();
+        const key = await crypto.subtle.importKey('raw', enc.encode('ZidanCode_Master_Secret_2026_ADL'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+        const sig = await crypto.subtle.sign('HMAC', key, enc.encode(devId + ':' + prodCode));
+        const hex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+        const expectedKey = 'ZC-' + hex.slice(0,4) + '-' + hex.slice(4,8) + '-' + hex.slice(8,12);
+
+        window.ZC_IS_PRO = (localStorage.getItem('Zidan_Key_' + prodCode) === expectedKey);
+        if (window.ZC_IS_PRO) {
+          document.getElementById('zcDemoBanner').style.display = 'none';
+        } else {
+          document.addEventListener('click', function(e) {
+            const btn = e.target.closest('button');
+            if (btn && !window.ZC_IS_PRO && /تصدير|تحميل|excel|csv|export|download|نسخ/i.test(btn.textContent)) {
+              e.stopImmediatePropagation();
+              e.preventDefault();
+              openZcUnlock();
+            }
+          }, true);
+        }
+
+        window.openZcUnlock = function() {
+          document.getElementById('zcUnlockModal').style.display = 'flex';
+        };
+
+        window.activateZcNow = function() {
+          const val = document.getElementById('zcKeyField').value.trim().toUpperCase();
+          if (val === expectedKey) {
+            localStorage.setItem('Zidan_Key_' + prodCode, expectedKey);
+            window.ZC_IS_PRO = true;
+            document.getElementById('zcUnlockModal').style.display = 'none';
+            document.getElementById('zcDemoBanner').style.display = 'none';
+            alert('✅ تم تفعيل النسخة الكاملة بنجاح!');
+          } else {
+            document.getElementById('zcStatusTxt').textContent = '⚠️ مفتاح التفعيل غير صحيح لهذا الجهاز.';
+          }
+        };
+      })();
+    </script>
+    
+</body>
+</html>

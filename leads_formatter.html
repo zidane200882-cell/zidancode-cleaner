@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظم ومنسق بيانات العملاء للتجارة الإلكترونية | ZidanCode Suite</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151c2c;
+            --bg-card-hover: #1e283d;
+            --border: #2a364f;
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --accent: #38bdf8;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1350px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-title h1 {
+            font-size: 1.6rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1000px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #4ade80;
+            padding: 14px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            outline: none;
+            direction: rtl;
+            text-align: right;
+        }
+
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        select, input[type="text"], input[type="number"] {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            padding: 10px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        button.btn-secondary {
+            background: #2563eb;
+        }
+        button.btn-secondary:hover {
+            background: #1d4ed8;
+        }
+
+        button.btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+        button.btn-outline:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--text-muted);
+        }
+
+        button.btn-danger {
+            background: var(--danger);
+        }
+        button.btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-card .num {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .stat-card.total .num { color: var(--accent); }
+        .stat-card.valid .num { color: var(--primary); }
+        .stat-card.invalid .num { color: var(--danger); }
+
+        .stat-card .lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .output-box {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            height: 280px;
+            overflow-y: auto;
+            padding: 0;
+            direction: rtl;
+        }
+
+        .table-list {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-list th, .table-list td {
+            padding: 10px 12px;
+            text-align: right;
+            border-bottom: 1px solid #1a2333;
+            font-size: 0.88rem;
+        }
+
+        .table-list th {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            position: sticky;
+            top: 0;
+            background: #090d16;
+            z-index: 10;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .drop-zone:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="brand-title">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <h1>منظم ومنسق بيانات العملاء للتجارة الإلكترونية</h1>
+                <span class="badge">ZidanCode Suite — أوفلاين 100%</span>
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-muted);">
+                استخراج الاسم والهاتف والعنوان • جاهز لشركات الشحن
+            </div>
+        </header>
+
+        <div class="grid">
+            <!-- Left Card: Input & Settings -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>إدخال بيانات العملاء الخام</h2>
+                    <span id="lineCount" style="font-size:0.8rem; color:var(--text-muted);">0 سطر</span>
+                </div>
+
+                <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+                    📁 اسحب ملف (TXT / CSV) هنا أو اضغط للرفع
+                    <input type="file" id="fileInput" accept=".txt,.csv" style="display:none;" onchange="handleFileSelect(event)">
+                </div>
+
+                <textarea id="rawInput" placeholder="الصق بيانات العملاء هنا (مثال:&#10;محمد أحمد - 01012345678 - القاهرة مدينة نصر شارع الهرم&#10;أحمد علي 01122334455 الجيزة الدقي&#10;سارة خالد، 01234567890، الإسكندرية سموحة)..." oninput="updateInputStats()"></textarea>
+
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label>الدولة الأساسية</label>
+                        <select id="countryDefault">
+                            <option value="20" selected>مصر (+20)</option>
+                            <option value="966">السعودية (+966)</option>
+                            <option value="971">الإمارات (+971)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>المحافظة الافتراضية (عند النقص)</label>
+                        <input type="text" id="defaultGovernorate" placeholder="مثال: القاهرة">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button onclick="processCustomerData()">⚡ تنظيم واستخراج البيانات</button>
+                    <button class="btn-outline btn-danger" onclick="clearAll()">🗑️ مسح الكل</button>
+                </div>
+            </div>
+
+            <!-- Right Card: Output & Export -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>جدول بيانات الشحن المنظمة</h2>
+                    <span id="processStatus" style="font-size:0.8rem; color:var(--primary);">جاهز للتشغيل</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="lbl">إجمالي السطور</div>
+                        <div class="num" id="statTotal">0</div>
+                    </div>
+                    <div class="stat-card valid">
+                        <div class="lbl">بيانات ناجحة</div>
+                        <div class="num" id="statValid">0</div>
+                    </div>
+                    <div class="stat-card invalid">
+                        <div class="lbl">تفتقر لهاتف</div>
+                        <div class="num" id="statInvalid">0</div>
+                    </div>
+                </div>
+
+                <div class="output-box">
+                    <table class="table-list" id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم العميل</th>
+                                <th>رقم الهاتف</th>
+                                <th>المحافظة</th>
+                                <th>العنوان التفصيلي</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTbody">
+                            <tr>
+                                <td colspan="5" style="text-align:center; color:var(--text-muted); padding:40px;">
+                                    قم بلصق بيانات العملاء واضغط على "تنظيم واستخراج البيانات".
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-secondary" onclick="copyTableData()">📋 نسخ الجدول (Excel Ready)</button>
+                    <button class="btn-outline" onclick="exportCSV()">📊 تصدير CSV / Excel</button>
+                    <button class="btn-outline" onclick="exportTXT()">📁 تصدير ملف TXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">تمت العملية بنجاح!</div>
+
+    <script>
+        let structuredCustomers = [];
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function updateInputStats() {
+            const text = document.getElementById('rawInput').value;
+            const lines = text.split('\n').filter(l => l.trim() !== '');
+            document.getElementById('lineCount').innerText = `${lines.length} سطر`;
+        }
+
+        function handleFileSelect(evt) {
+            const file = evt.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('rawInput').value = e.target.result;
+                updateInputStats();
+                showToast(`تم تحميل الملف: ${file.name}`);
+            };
+            reader.readAsText(file);
+        }
+
+        const dropZone = document.getElementById('dropZone');
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--primary)'; });
+        dropZone.addEventListener('dragleave', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--border)'; });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border)';
+            if (e.dataTransfer.files.length > 0) {
+                document.getElementById('fileInput').files = e.dataTransfer.files;
+                handleFileSelect({ target: { files: e.dataTransfer.files } });
+            }
+        });
+
+        const egyptianGovernorates = [
+            'القاهرة', 'الجيزة', 'الإسكندرية', 'الدقهلية', 'الشرقية', 'الغربية', 'المنوفية', 
+            'القليوبية', 'البحيرة', 'كفر الشيخ', 'الفيوم', 'بني سويف', 'أسيوط', 'سوهاج', 
+            'قنا', 'أسوان', 'الأقصر', 'البحر الأحمر', 'الوادي الجديد', 'مطروح', 'دمياط', 
+            'بورسعيد', 'الإسماعيلية', 'السويس', 'شمال سيناء', 'جنوب سيناء'
+        ];
+
+        function extractPhone(text) {
+            // Match phone numbers like 010xxxxxxxx, +20..., etc.
+            const phoneRegex = /(?:00|\+)?(20)?(01[0125]\d{8}|0[23]\d{8}|0[4-9]\d{7,8})/g;
+            const matches = text.match(phoneRegex);
+            if (matches && matches.length > 0) {
+                let p = matches[0].replace(/\D/g, '');
+                if (p.startsWith('20') && p.length === 12) p = '0' + p.substring(2);
+                else if (p.startsWith('0020')) p = '0' + p.substring(4);
+                return p;
+            }
+            // Fallback generic 10-11 digits
+            const genericDigits = text.replace(/[^\d]/g, '');
+            if (genericDigits.length >= 10 && genericDigits.length <= 12) {
+                return genericDigits;
+            }
+            return '';
+        }
+
+        function extractGovernorate(text) {
+            for (let gov of egyptianGovernorates) {
+                if (text.includes(gov)) return gov;
+            }
+            return document.getElementById('defaultGovernorate').value.trim() || 'غير تحديد';
+        }
+
+        function processCustomerData() {
+            const rawText = document.getElementById('rawInput').value;
+            if (!rawText.trim()) {
+                showToast('⚠️ يرجى إدخال بيانات العملاء أولاً!');
+                return;
+            }
+
+            const lines = rawText.split(/[\n]+/).map(s => s.trim()).filter(Boolean);
+            structuredCustomers = [];
+            let invalidCount = 0;
+
+            lines.forEach((line) => {
+                const phone = extractPhone(line);
+                if (!phone) {
+                    invalidCount++;
+                    return;
+                }
+
+                const gov = extractGovernorate(line);
+                
+                // Remove phone and gov from line to clean up name and address
+                let cleanLine = line.replace(phone, '').replace(gov, '').replace(/[-,\/|]/g, ' ').trim();
+                // Clean extra spaces
+                cleanLine = cleanLine.replace(/\s+/g, ' ');
+
+                let parts = cleanLine.split(' ');
+                let name = '';
+                let address = '';
+
+                if (parts.length >= 2) {
+                    name = parts.slice(0, 2).join(' ');
+                    address = parts.slice(2).join(' ') || 'العنوان الرئيسي';
+                } else if (parts.length === 1) {
+                    name = parts[0];
+                    address = 'العنوان الرئيسي';
+                } else {
+                    name = 'عميل كريم';
+                    address = cleanLine || 'العنوان الرئيسي';
+                }
+
+                structuredCustomers.push({
+                    name: name,
+                    phone: phone,
+                    governorate: gov,
+                    address: address
+                });
+            });
+
+            document.getElementById('statTotal').innerText = lines.length;
+            document.getElementById('statValid').innerText = structuredCustomers.length;
+            document.getElementById('statInvalid').innerText = invalidCount;
+
+            renderTable();
+            showToast(`✅ تمت التنظيم بنجاح: ${structuredCustomers.length} عميل جاهز!`);
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('resultsTbody');
+            tbody.innerHTML = '';
+
+            if (structuredCustomers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">لا توجد بيانات مطابقة.</td></tr>`;
+                return;
+            }
+
+            structuredCustomers.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td style="color:#4ade80; font-weight:600;">${item.name}</td>
+                    <td style="direction: ltr; text-align: right; color:var(--accent); font-weight:600;">${item.phone}</td>
+                    <td>${item.governorate}</td>
+                    <td style="color:var(--text-muted);">${item.address}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function copyTableData() {
+            if (structuredCustomers.length === 0) {
+                showToast('⚠️ لا توجد بيانات للنسخ!');
+                return;
+            }
+            let text = "الاسم\tالهاتف\tالمحافظة\tالعنوان التفصيلي\n";
+            structuredCustomers.forEach(c => {
+                text += `${c.name}\t${c.phone}\t${c.governorate}\t${c.address}\n`;
+            });
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 تم نسخ الجدول بنجاح (يمكنك لصقه مباشرة في Excel)!');
+            });
+        }
+
+        function exportCSV() {
+            if (structuredCustomers.length === 0) {
+                showToast('⚠️ لا توجد بيانات للتصدير!');
+                return;
+            }
+            let csv = "data:text/csv;charset=utf-8,\uFEFF";
+            csv += "الاسم,الهاتف,المحافظة,العنوان\n";
+            structuredCustomers.forEach(c => {
+                csv += `"${c.name}","${c.phone}","${c.governorate}","${c.address}"\n`;
+            });
+            const encodedUri = encodeURI(csv);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Shipping_Customers_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('📊 تم تصدير ملف CSV بنجاح!');
+        }
+
+        function exportTXT() {
+            if (structuredCustomers.length === 0) {
+                showToast('⚠️ لا توجد بيانات للتصدير!');
+                return;
+            }
+            let text = "";
+            structuredCustomers.forEach(c => {
+                text += `الاسم: ${c.name} | الهاتف: ${c.phone} | المحافظة: ${c.governorate} | العنوان: ${c.address}\n`;
+            });
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Shipping_List_${new Date().toISOString().slice(0,10)}.txt`;
+            link.click();
+            showToast('📁 تم تحميل ملف TXT بنجاح!');
+        }
+
+        function clearAll() {
+            document.getElementById('rawInput').value = '';
+            structuredCustomers = [];
+            document.getElementById('statTotal').innerText = '0';
+            document.getElementById('statValid').innerText = '0';
+            document.getElementById('statInvalid').innerText = '0';
+            updateInputStats();
+            renderTable();
+            showToast('🗑️ تم مسح كافة البيانات.');
+        }
+    </script>
+
+    <style>
+      #zcDemoBanner {
+        position: fixed; bottom: 0; left: 0; right: 0; background: #0f172a; border-top: 2px solid #38bdf8;
+        color: #f8fafc; padding: 10px 18px; display: flex; align-items: center; justify-content: space-between;
+        z-index: 999998; font-family: Tahoma, sans-serif; direction: rtl; box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
+      }
+      #zcDemoBanner button {
+        background: #16a34a; color: #fff; border: none; padding: 8px 16px; border-radius: 8px;
+        font-weight: bold; cursor: pointer; font-size: 14px;
+      }
+      #zcUnlockModal {
+        display: none; position: fixed; inset: 0; background: rgba(7,13,25,0.92); z-index: 999999;
+        align-items: center; justify-content: center; font-family: Tahoma, sans-serif; direction: rtl;
+      }
+      .zc-box {
+        background: #0f172a; border: 2px solid #38bdf8; border-radius: 14px; padding: 24px;
+        max-width: 440px; width: 92%; text-align: center; color: #f8fafc;
+      }
+    </style>
+    <div id="zcDemoBanner">
+      <span>🧪 <b>وضع التجربة المجانية (Demo):</b> يمكنك تجربة الأداة الآن — النسخة الكاملة بـ <b>350 ج.م</b></span>
+      <button onclick="openZcUnlock()">🔓 تفعيل النسخة الكاملة</button>
+    </div>
+    <div id="zcUnlockModal">
+      <div class="zc-box">
+        <h3 style="color:#38bdf8;margin-top:0;">🔑 تفعيل النسخة الكاملة مدى الحياة</h3>
+        <p style="font-size:13px;color:#cbd5e1;">ابعت كود بصمة جهازك على واتساب <b>+201090724210</b> لاستلام مفتاح التفعيل:</p>
+        <div id="zcDevShow" style="background:#070d19;border:1px dashed #fbbf24;color:#fbbf24;padding:8px;border-radius:6px;font-family:monospace;font-size:16px;margin:10px 0;user-select:all;"></div>
+        <input id="zcKeyField" type="text" placeholder="ZC-XXXX-XXXX-XXXX" style="width:92%;padding:10px;border-radius:6px;border:1px solid #475569;background:#070d19;color:#4ade80;text-align:center;font-family:monospace;font-size:15px;margin-bottom:10px;">
+        <div style="display:flex;gap:8px;">
+          <button onclick="activateZcNow()" style="flex:1;background:#0284c7;color:#fff;border:none;padding:10px;border-radius:6px;font-weight:bold;cursor:pointer;">تفعيل الآن ✅</button>
+          <button onclick="document.getElementById('zcUnlockModal').style.display='none'" style="background:#334155;color:#fff;border:none;padding:10px 14px;border-radius:6px;cursor:pointer;">إغلاق</button>
+        </div>
+        <p id="zcStatusTxt" style="color:#f87171;font-size:12px;margin-top:8px;"></p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.onkeydown = e => { if (e.keyCode == 123) return false; };
+      (async function() {
+        const prodCode = "LEADS_FORMATTER";
+        let devId = localStorage.getItem('zc_dev_id');
+        if (!devId) {
+          devId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+          localStorage.setItem('zc_dev_id', devId);
+        }
+        document.getElementById('zcDevShow').textContent = devId;
+
+        const enc = new TextEncoder();
+        const key = await crypto.subtle.importKey('raw', enc.encode('ZidanCode_Master_Secret_2026_ADL'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+        const sig = await crypto.subtle.sign('HMAC', key, enc.encode(devId + ':' + prodCode));
+        const hex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+        const expectedKey = 'ZC-' + hex.slice(0,4) + '-' + hex.slice(4,8) + '-' + hex.slice(8,12);
+
+        window.ZC_IS_PRO = (localStorage.getItem('Zidan_Key_' + prodCode) === expectedKey);
+        if (window.ZC_IS_PRO) {
+          document.getElementById('zcDemoBanner').style.display = 'none';
+        } else {
+          document.addEventListener('click', function(e) {
+            const btn = e.target.closest('button');
+            if (btn && !window.ZC_IS_PRO && /تصدير|تحميل|excel|csv|export|download|نسخ/i.test(btn.textContent)) {
+              e.stopImmediatePropagation();
+              e.preventDefault();
+              openZcUnlock();
+            }
+          }, true);
+        }
+
+        window.openZcUnlock = function() {
+          document.getElementById('zcUnlockModal').style.display = 'flex';
+        };
+
+        window.activateZcNow = function() {
+          const val = document.getElementById('zcKeyField').value.trim().toUpperCase();
+          if (val === expectedKey) {
+            localStorage.setItem('Zidan_Key_' + prodCode, expectedKey);
+            window.ZC_IS_PRO = true;
+            document.getElementById('zcUnlockModal').style.display = 'none';
+            document.getElementById('zcDemoBanner').style.display = 'none';
+            alert('✅ تم تفعيل النسخة الكاملة بنجاح!');
+          } else {
+            document.getElementById('zcStatusTxt').textContent = '⚠️ مفتاح التفعيل غير صحيح لهذا الجهاز.';
+          }
+        };
+      })();
+    </script>
+    
+</body>
+</html>

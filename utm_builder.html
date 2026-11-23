@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مولد ومنظم روابط UTM | ZidanCode Suite</title>
+    <style>
+        :root { --bg: #0b0f19; --card: #151c2c; --border: #2a364f; --primary: #10b981; --text: #f3f4f6; --input: #1e293b; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        input, select { width: 100%; padding: 10px; background: var(--input); border: 1px solid var(--border); color: white; border-radius: 6px; box-sizing: border-box; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .result-area { margin-top: 20px; padding: 15px; background: #000; border-radius: 6px; word-break: break-all; font-family: monospace; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid var(--border); padding: 10px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>مولد ومنظم روابط UTM</h2>
+        <div class="grid">
+            <input type="url" id="url" placeholder="رابط الموقع (URL)">
+            <input type="text" id="source" placeholder="المصدر (utm_source)">
+            <input type="text" id="medium" placeholder="الوسيط (utm_medium)">
+            <input type="text" id="campaign" placeholder="الحملة (utm_campaign)">
+        </div>
+        <button onclick="generateLink()">توليد الرابط</button>
+        <div class="result-area" id="finalUrl">رابطك سيظهر هنا...</div>
+        <button onclick="saveLink()" style="background:#3b82f6">حفظ الرابط في السجل</button>
+        <button onclick="exportCSV()" style="background:#64748b">تصدير CSV</button>
+        
+        <table id="historyTable">
+            <thead><tr><th>الرابط</th><th>العمليات</th></tr></thead>
+            <tbody id="historyBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let history = JSON.parse(localStorage.getItem('utm_history') || '[]');
+        
+        function generateLink() {
+            const url = document.getElementById('url').value;
+            const params = new URLSearchParams({
+                utm_source: document.getElementById('source').value,
+                utm_medium: document.getElementById('medium').value,
+                utm_campaign: document.getElementById('campaign').value
+            });
+            const full = `${url}?${params.toString()}`;
+            document.getElementById('finalUrl').innerText = full;
+            return full;
+        }
+
+        function saveLink() {
+            const link = document.getElementById('finalUrl').innerText;
+            if(link.includes('http')) {
+                history.push(link);
+                localStorage.setItem('utm_history', JSON.stringify(history));
+                renderTable();
+            }
+        }
+
+        function renderTable() {
+            const body = document.getElementById('historyBody');
+            body.innerHTML = history.map((l, i) => `<tr><td>${l}</td><td><button onclick="copy('${l}')">نسخ</button></td></tr>`).join('');
+        }
+
+        function copy(text) { navigator.clipboard.writeText(text); alert('تم النسخ'); }
+
+        function exportCSV() {
+            const csv = "data:text/csv;charset=utf-8," + history.join('\n');
+            const encoded = encodeURI(csv);
+            const a = document.createElement('a');
+            a.setAttribute('href', encoded);
+            a.setAttribute('download', 'utm_links.csv');
+            a.click();
+        }
+        renderTable();
+    </script>
+
+    <style>
+      #zcDemoBanner {
+        position: fixed; bottom: 0; left: 0; right: 0; background: #0f172a; border-top: 2px solid #38bdf8;
+        color: #f8fafc; padding: 10px 18px; display: flex; align-items: center; justify-content: space-between;
+        z-index: 999998; font-family: Tahoma, sans-serif; direction: rtl; box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
+      }
+      #zcDemoBanner button {
+        background: #16a34a; color: #fff; border: none; padding: 8px 16px; border-radius: 8px;
+        font-weight: bold; cursor: pointer; font-size: 14px;
+      }
+      #zcUnlockModal {
+        display: none; position: fixed; inset: 0; background: rgba(7,13,25,0.92); z-index: 999999;
+        align-items: center; justify-content: center; font-family: Tahoma, sans-serif; direction: rtl;
+      }
+      .zc-box {
+        background: #0f172a; border: 2px solid #38bdf8; border-radius: 14px; padding: 24px;
+        max-width: 440px; width: 92%; text-align: center; color: #f8fafc;
+      }
+    </style>
+    <div id="zcDemoBanner">
+      <span>🧪 <b>وضع التجربة المجانية (Demo):</b> يمكنك تجربة الأداة الآن — النسخة الكاملة بـ <b>350 ج.م</b></span>
+      <button onclick="openZcUnlock()">🔓 تفعيل النسخة الكاملة</button>
+    </div>
+    <div id="zcUnlockModal">
+      <div class="zc-box">
+        <h3 style="color:#38bdf8;margin-top:0;">🔑 تفعيل النسخة الكاملة مدى الحياة</h3>
+        <p style="font-size:13px;color:#cbd5e1;">ابعت كود بصمة جهازك على واتساب <b>+201090724210</b> لاستلام مفتاح التفعيل:</p>
+        <div id="zcDevShow" style="background:#070d19;border:1px dashed #fbbf24;color:#fbbf24;padding:8px;border-radius:6px;font-family:monospace;font-size:16px;margin:10px 0;user-select:all;"></div>
+        <input id="zcKeyField" type="text" placeholder="ZC-XXXX-XXXX-XXXX" style="width:92%;padding:10px;border-radius:6px;border:1px solid #475569;background:#070d19;color:#4ade80;text-align:center;font-family:monospace;font-size:15px;margin-bottom:10px;">
+        <div style="display:flex;gap:8px;">
+          <button onclick="activateZcNow()" style="flex:1;background:#0284c7;color:#fff;border:none;padding:10px;border-radius:6px;font-weight:bold;cursor:pointer;">تفعيل الآن ✅</button>
+          <button onclick="document.getElementById('zcUnlockModal').style.display='none'" style="background:#334155;color:#fff;border:none;padding:10px 14px;border-radius:6px;cursor:pointer;">إغلاق</button>
+        </div>
+        <p id="zcStatusTxt" style="color:#f87171;font-size:12px;margin-top:8px;"></p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.onkeydown = e => { if (e.keyCode == 123) return false; };
+      (async function() {
+        const prodCode = "UTM_BUILDER";
+        let devId = localStorage.getItem('zc_dev_id');
+        if (!devId) {
+          devId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+          localStorage.setItem('zc_dev_id', devId);
+        }
+        document.getElementById('zcDevShow').textContent = devId;
+
+        const enc = new TextEncoder();
+        const key = await crypto.subtle.importKey('raw', enc.encode('ZidanCode_Master_Secret_2026_ADL'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+        const sig = await crypto.subtle.sign('HMAC', key, enc.encode(devId + ':' + prodCode));
+        const hex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+        const expectedKey = 'ZC-' + hex.slice(0,4) + '-' + hex.slice(4,8) + '-' + hex.slice(8,12);
+
+        window.ZC_IS_PRO = (localStorage.getItem('Zidan_Key_' + prodCode) === expectedKey);
+        if (window.ZC_IS_PRO) {
+          document.getElementById('zcDemoBanner').style.display = 'none';
+        } else {
+          document.addEventListener('click', function(e) {
+            const btn = e.target.closest('button');
+            if (btn && !window.ZC_IS_PRO && /تصدير|تحميل|excel|csv|export|download|نسخ/i.test(btn.textContent)) {
+              e.stopImmediatePropagation();
+              e.preventDefault();
+              openZcUnlock();
+            }
+          }, true);
+        }
+
+        window.openZcUnlock = function() {
+          document.getElementById('zcUnlockModal').style.display = 'flex';
+        };
+
+        window.activateZcNow = function() {
+          const val = document.getElementById('zcKeyField').value.trim().toUpperCase();
+          if (val === expectedKey) {
+            localStorage.setItem('Zidan_Key_' + prodCode, expectedKey);
+            window.ZC_IS_PRO = true;
+            document.getElementById('zcUnlockModal').style.display = 'none';
+            document.getElementById('zcDemoBanner').style.display = 'none';
+            alert('✅ تم تفعيل النسخة الكاملة بنجاح!');
+          } else {
+            document.getElementById('zcStatusTxt').textContent = '⚠️ مفتاح التفعيل غير صحيح لهذا الجهاز.';
+          }
+        };
+      })();
+    </script>
+    
+</body>
+</html>

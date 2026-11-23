@@ -1,543 +1,109 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZidanCode Maestro - هندسة بكرة | باقة أدوات الميديا بايرز والمتاجر</title>
-  <style>
-    :root {
-      --bg-dark: #0b1120;
-      --bg-card: #0f172a;
-      --bg-card-hover: #131f38;
-      --blue: #38bdf8;
-      --green: #4ade80;
-      --red: #f87171;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --border: #1e293b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-      background: radial-gradient(circle at top center, #112040 0%, var(--bg-dark) 55%);
-      color: var(--text);
-      line-height: 1.65;
-    }
-    a { text-decoration: none; }
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 18px; }
-
-    /* Navbar */
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 0;
-      border-bottom: 1px solid rgba(56, 189, 248, 0.15);
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .brand {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text);
-    }
-    .brand span { color: var(--blue); }
-    .btn-nav {
-      background: var(--blue);
-      color: #061224;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    /* Hero */
-    .hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 28px;
-      align-items: center;
-      padding: 46px 0 34px;
-    }
-    @media (max-width: 820px) {
-      .hero { grid-template-columns: 1fr; text-align: center; }
-    }
-    .pill {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.14);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      color: var(--blue);
-      padding: 5px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 14px;
-    }
-    .hero h1 {
-      font-size: 34px;
-      margin: 0 0 12px;
-      line-height: 1.3;
-    }
-    .hero h1 span { color: var(--blue); }
-    .hero p {
-      color: var(--muted);
-      font-size: 16px;
-      margin: 0 0 22px;
-    }
-    .hero-btns {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    @media (max-width: 820px) {
-      .hero-btns { justify-content: center; }
-    }
-    .btn-primary {
-      background: linear-gradient(90deg, #4ade80, #22c55e);
-      color: #052e16;
-      padding: 14px 26px;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 16px;
-      display: inline-block;
-    }
-    .btn-secondary {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid var(--blue);
-      color: var(--blue);
-      padding: 14px 24px;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 16px;
-      display: inline-block;
-    }
-    .hero-img-box {
-      text-align: center;
-    }
-    .hero-img-box img {
-      max-width: 100%;
-      width: 340px;
-      border-radius: 18px;
-      border: 2px solid rgba(56, 189, 248, 0.5);
-      box-shadow: 0 0 35px rgba(56, 189, 248, 0.22);
-    }
-
-    /* Bundle Banner */
-    .bundle-banner {
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(8, 47, 73, 0.85));
-      border: 2px solid var(--green);
-      border-radius: 20px;
-      padding: 28px 24px;
-      margin: 18px 0 42px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
-    }
-    .bundle-info h2 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      color: var(--green);
-    }
-    .bundle-info p {
-      margin: 0;
-      color: #cbd5e1;
-      font-size: 15px;
-    }
-    .price-box {
-      text-align: center;
-      background: rgba(2, 6, 23, 0.7);
-      border: 1px solid rgba(74, 222, 128, 0.4);
-      padding: 16px 24px;
-      border-radius: 14px;
-      min-width: 240px;
-    }
-    .old-price {
-      color: var(--red);
-      text-decoration: line-through;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .new-price {
-      color: var(--green);
-      font-size: 32px;
-      font-weight: bold;
-      margin: 4px 0;
-    }
-    .save-tag {
-      color: var(--blue);
-      font-size: 13px;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    /* Tools Grid */
-    .section-title {
-      text-align: center;
-      margin: 0 0 8px;
-      font-size: 28px;
-      color: var(--blue);
-    }
-    .section-sub {
-      text-align: center;
-      color: var(--muted);
-      margin: 0 0 28px;
-      font-size: 15px;
-    }
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
-      margin-bottom: 44px;
-    }
-    .tool-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .tool-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--blue);
-      background: var(--bg-card-hover);
-    }
-    .tool-num {
-      font-size: 12px;
-      color: var(--blue);
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-    .tool-card h3 {
-      margin: 0 0 10px;
-      font-size: 19px;
-      color: var(--text);
-    }
-    .tool-card p {
-      margin: 0 0 14px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-    .tool-features {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 18px;
-      font-size: 13px;
-      color: #cbd5e1;
-    }
-    .tool-features li {
-      margin-bottom: 6px;
-      padding-right: 14px;
-      position: relative;
-    }
-    .tool-features li::before {
-      content: "✓";
-      color: var(--green);
-      position: absolute;
-      right: 0;
-      font-weight: bold;
-    }
-    .tool-footer {
-      border-top: 1px solid var(--border);
-      padding-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-    .tool-price {
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--green);
-    }
-    .tool-price small {
-      display: block;
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: normal;
-    }
-    .btn-sm {
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid var(--blue);
-      color: var(--blue);
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-    .btn-sm:hover {
-      background: var(--blue);
-      color: #061224;
-    }
-
-    /* Before / After */
-    .ba-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin-bottom: 42px;
-    }
-    .ba-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-    }
-    .ba-before h4 { color: var(--red); margin: 0 0 8px; font-size: 17px; }
-    .ba-after h4 { color: var(--green); margin: 0 0 8px; font-size: 17px; }
-    .ba-card code {
-      display: block;
-      background: #020617;
-      padding: 12px;
-      border-radius: 8px;
-      color: #e2e8f0;
-      font-size: 14px;
-      margin-top: 8px;
-    }
-
-    /* Trust Features */
-    .trust-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 46px;
-    }
-    .trust-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-    }
-    .trust-card h4 {
-      color: var(--blue);
-      margin: 0 0 8px;
-      font-size: 17px;
-    }
-    .trust-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* About Section */
-    .about-box {
-      background: linear-gradient(180deg, #0d1a33, #0b1120);
-      border: 1px solid rgba(56, 189, 248, 0.45);
-      border-radius: 18px;
-      padding: 30px 24px;
-      margin-bottom: 40px;
-      text-align: center;
-    }
-    .about-box h2 {
-      color: var(--blue);
-      margin: 0 0 12px;
-      font-size: 24px;
-    }
-    .about-box p {
-      max-width: 780px;
-      margin: 0 auto 22px;
-      color: #cbd5e1;
-      font-size: 15px;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-      margin-bottom: 24px;
-      text-align: right;
-    }
-    .service-item {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-    }
-    .service-item h4 {
-      color: var(--blue);
-      margin: 0 0 6px;
-      font-size: 16px;
-    }
-    .service-item p {
-      margin: 0;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px 0 32px;
-      color: #64748b;
-      font-size: 13px;
-      border-top: 1px solid var(--border);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZidanCode Suite — باقة أدوات التجارة الإلكترونية الذكية</title>
+<style>
+  body { margin:0; font-family:'Segoe UI',Tahoma,sans-serif; background:#070d19; color:#f8fafc; }
+  .hero { text-align:center; padding:42px 20px 28px; background:linear-gradient(180deg,#0f172a 0%,#070d19 100%); border-bottom:1px solid #1e293b; }
+  .tag { display:inline-block; background:#0284c7; color:#fff; padding:5px 14px; border-radius:20px; font-size:13px; font-weight:bold; margin-bottom:12px; }
+  h1 { margin:0 0 12px; font-size:28px; color:#38bdf8; }
+  .sub { color:#cbd5e1; max-width:640px; margin:0 auto 20px; font-size:16px; line-height:1.6; }
+  .offer { background:#052e16; border:2px solid #22c55e; display:inline-block; padding:14px 24px; border-radius:14px; margin-top:8px; }
+  .offer strong { color:#4ade80; font-size:22px; }
+  .pay-box { background:#0f172a; border:1px solid #38bdf8; max-width:650px; margin:20px auto 0; padding:14px 18px; border-radius:12px; font-size:14px; line-height:1.7; color:#e2e8f0; }
+  .container { max-width:1050px; margin:30px auto; padding:0 18px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:18px; }
+  .card { background:#0f172a; border:1px solid #1e293b; border-radius:14px; padding:20px; display:flex; flex-direction:column; justify-content:space-between; }
+  .card:hover { border-color:#38bdf8; }
+  .card h3 { margin:0 0 8px; color:#fbbf24; font-size:18px; }
+  .card p { color:#94a3b8; font-size:14px; line-height:1.6; margin:0 0 16px; }
+  .price-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:14px; color:#cbd5e1; }
+  .btn { display:block; text-align:center; background:#0284c7; color:#fff; text-decoration:none; padding:11px; border-radius:8px; font-weight:bold; font-size:15px; }
+  .btn:hover { background:#0369a1; }
+  .wa-btn { display:inline-block; background:#16a34a; color:#fff; text-decoration:none; padding:10px 20px; border-radius:8px; font-weight:bold; margin-top:10px; }
+  footer { text-align:center; padding:26px; color:#64748b; font-size:13px; border-top:1px solid #1e293b; margin-top:40px; }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <nav class="nav">
-      <div class="brand">صوت الأفكار | هندسة بكرة — <span>ZidanCode Maestro</span></div>
-      <a class="btn-nav" href="https://wa.me/201012034239?text=مرحباً%20ZidanCode%20Maestro،%20أرغب%20في%20تجربة%20عينة%20مجانية%20لأدوات%20الباقة" target="_blank">جرّب عينة مجاناً</a>
-    </nav>
-
-    <section class="hero">
-      <div>
-        <div class="pill">تعمل محلياً 100% بدون إنترنت | امتلاك مدى الحياة</div>
-        <h1>باقة أدوات <span>ZidanCode Suite</span> للميديا بايرز والمتاجر الإلكترونية</h1>
-        <p>4 أدوات احترافية مصممة خصيصاً للسوق المصري لتنظيف شيتات المنتجات، توحيد أرقام العملاء، حساب أرباح ومرتجعات الـ COD، وبناء روابط تتبع الحملات — بدون اشتراكات شهرية بالدولار.</p>
-        <div class="hero-btns">
-          <a class="btn-primary" href="https://wa.me/201012034239?text=مرحباً%20ZidanCode%20Maestro،%20أرغب%20في%20شراء%20الباقة%20الكاملة%20(4%20أدوات)%20بسعر%20750%20جنيه" target="_blank">احصل على الباقة الكاملة (750 ج.م)</a>
-          <a class="btn-secondary" href="#tools">استعرض الأدوات الأربع</a>
-        </div>
-      </div>
-      <div class="hero-img-box">
-        <img src="Gemini_Generated_Image(1).jpeg" alt="ZidanCode Maestro" onerror="this.style.display='none'">
-      </div>
-    </section>
-
-    <section class="bundle-banner">
-      <div class="bundle-info">
-        <h2>عرض الباقة المتكاملة (ZidanCode Suite — 4 أدوات)</h2>
-        <p>امتلك الأدوات الأربع معاً بملفات مستقلة تعمل على اللابتوب والموبايل مدى الحياة بدون إنترنت + دعم فني مباشر عبر واتساب.</p>
-      </div>
-      <div class="price-box">
-        <div class="old-price">بدلاً من 1,400 جنيه</div>
-        <div class="new-price">750 ج.م</div>
-        <span class="save-tag">توفير 650 جنيه (خصم 46%) — دفع مرة واحدة</span>
-        <a class="btn-primary" style="display:block; padding:11px 16px; font-size:15px;" href="https://wa.me/201012034239?text=مرحباً%20ZidanCode%20Maestro،%20أرغب%20في%20حجز%20عرض%20الباقة%20الكاملة%20بـ%20750%20جنيه" target="_blank">اطلب الباقة عبر واتساب</a>
-      </div>
-    </section>
-
-    <section id="tools">
-      <h2 class="section-title">أدوات باقة ZidanCode الاحترافية</h2>
-      <p class="section-sub">يمكنك امتلاك أي أداة بشكل منفرد أو الحصول على الباقة الكاملة بخصم 46%</p>
-
-      <div class="tools-grid">
-        <div class="tool-card">
-          <div>
-            <div class="tool-num">الأداة 01 | تحسين الكتالوج</div>
-            <h3>ZidanCode Cleaner Pro</h3>
-            <p>مُحسّن بيانات المتاجر (CSV) لتجهيز شيتات المنتجات للرفع على كتالوج ميتا وشوبيفاي دون رفض.</p>
-            <ul class="tool-features">
-              <li>إزالة الرموز الفوضوية والمسافات الزائدة</li>
-              <li>توحيد العملات المصرية تلقائياً إلى EGP</li>
-              <li>معاينة قبل/بعد وتصدير CSV متوافق مع Excel</li>
-            </ul>
-          </div>
-          <div class="tool-footer">
-            <div class="tool-price">350 ج.م <small>امتلاك مدى الحياة</small></div>
-            <a class="btn-sm" href="https://wa.me/201012034239?text=مرحباً،%20أرغب%20في%20طلب%20أداة%20ZidanCode%20Cleaner%20Pro%20(350%20جنيه)" target="_blank">اطلب الأداة</a>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <div>
-            <div class="tool-num">الأداة 02 | جودة البيانات</div>
-            <h3>ZidanCode Leads Formatter</h3>
-            <p>مُوحّد أرقام العملاء المصرية لرفع نسبة المطابقة (Match Rate) في جماهير ميتا المخصصة والواتساب.</p>
-            <ul class="tool-features">
-              <li>تحويل الأرقام العربية (٠١٠) إلى إنجليزية</li>
-              <li>توحيد الصيغة الدولية +20 وفلترة الأرقام الخطأ</li>
-              <li>حذف الأرقام المكررة وتصدير شيت CSV نظيف</li>
-            </ul>
-          </div>
-          <div class="tool-footer">
-            <div class="tool-price">350 ج.م <small>امتلاك مدى الحياة</small></div>
-            <a class="btn-sm" href="https://wa.me/201012034239?text=مرحباً،%20أرغب%20في%20طلب%20أداة%20ZidanCode%20Leads%20Formatter%20(350%20جنيه)" target="_blank">اطلب الأداة</a>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <div>
-            <div class="tool-num">الأداة 03 | المحاسبة الإعلانية</div>
-            <h3>ZidanCode COD Profit Calc</h3>
-            <p>حاسبة أرباح ومرتجعات نظام الدفع عند الاستلام (COD) لمعرفة صافي ربحك الحقيقي قبل التوسع.</p>
-            <ul class="tool-features">
-              <li>حساب دقيق للمُسلّم والمرتجعات وتكلفة الشحن</li>
-              <li>استخراج نقطة التعادل (Break-even ROAS)</li>
-              <li>حساب أقصى تكلفة مسموحة للأوردر (Max CPO)</li>
-            </ul>
-          </div>
-          <div class="tool-footer">
-            <div class="tool-price">400 ج.م <small>امتلاك مدى الحياة</small></div>
-            <a class="btn-sm" href="https://wa.me/201012034239?text=مرحباً،%20أرغب%20في%20طلب%20أداة%20ZidanCode%20COD%20Profit%20Calc%20(400%20جنيه)" target="_blank">اطلب الأداة</a>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <div>
-            <div class="tool-num">الأداة 04 | تتبع الحملات</div>
-            <h3>ZidanCode UTM Builder</h3>
-            <p>مُنشئ روابط التتبع الاحترافي لقياس أداء كل إعلان ومنصة بدقة بدون أخطاء في الروابط.</p>
-            <ul class="tool-features">
-              <li>قوالب جاهزة لفيسبوك وتيك توك وجوجل</li>
-              <li>جدول حفظ فوري للروابط ونسخ بضغطة زر</li>
-              <li>تصدير سجل الروابط الكامل إلى ملف CSV</li>
-            </ul>
-          </div>
-          <div class="tool-footer">
-            <div class="tool-price">300 ج.م <small>امتلاك مدى الحياة</small></div>
-            <a class="btn-sm" href="https://wa.me/201012034239?text=مرحباً،%20أرغب%20في%20طلب%20أداة%20ZidanCode%20UTM%20Builder%20(300%20جنيه)" target="_blank">اطلب الأداة</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="ba-grid">
-      <div class="ba-card ba-before">
-        <h4>البيانات الفوضوية (قبل ZidanCode)</h4>
-        <code>***سماعة بلوتوث (أصلي)*** , 450 ج.م | ٠١٠١٢٣٤٥٦٧٨ (مكرر)</code>
-      </div>
-      <div class="ba-card ba-after">
-        <h4>النتيجة النظيفة الجاهزة للإعلانات (بعد ZidanCode)</h4>
-        <code>سماعة بلوتوث أصلي , 450 EGP | +201012345678</code>
-      </div>
-    </section>
-
-    <section class="trust-grid">
-      <div class="trust-card">
-        <h4>أمان وخصوصية 100%</h4>
-        <p>الأدوات تعمل محلياً داخل متصفحك بدون إنترنت؛ بيانات متجرك وأرقام عملائك لا تغادر جهازك أبداً.</p>
-      </div>
-      <div class="trust-card">
-        <h4>سرعة فائقة على أي جهاز</h4>
-        <p>ملف واحد خفيف يعمل على الويندوز والماك والموبايل بدون تسطيب وبدون الحاجة لسيرفرات.</p>
-      </div>
-      <div class="trust-card">
-        <h4>امتلاك مدى الحياة بالجنيه</h4>
-        <p>ادفع مرة واحدة عبر فودافون كاش أو إنستاباي وودّع الاشتراكات الشهرية بالدولار.</p>
-      </div>
-    </section>
-
-    <section class="about-box">
-      <h2>عن منظومة ZidanCode Maestro (صوت الأفكار | هندسة بكرة)</h2>
-      <p>نحن منظومة تقنية متخصصة في تقديم الحلول البرمجية الذكية، وإعادة بناء الأدوات العالمية بمرونة أعلى وتطوير محلي متكامل. هدفنا تقديم بدائل احترافية تنافس الأدوات المدفوعة بالدولار — بامتلاك مدى الحياة، وتحديثات مستمرة، وبسعر بالجنيه المصري.</p>
-      <div class="services-grid">
-        <div class="service-item">
-          <h4>أتمتة المهام والتقارير</h4>
-          <p>تحويل العمل اليدوي المتكرر في الإكسيل والملفات إلى أدوات سريعة تعمل بضغطة زر.</p>
-        </div>
-        <div class="service-item">
-          <h4>بدائل الأدوات المدفوعة بالدولار</h4>
-          <p>إعادة تصميم وتطوير أدوات السوق العالمية محلياً بتكلفة اقتصادية وبدون اشتراكات شهرية.</p>
-        </div>
-        <div class="service-item">
-          <h4>تطوير أدوات مخصصة لنشاطك</h4>
-          <p>تصميم برامج محلية آمنة تناسب احتياجات متجرك أو شركتك بدقة وسرعة.</p>
-        </div>
-      </div>
-      <a class="btn-primary" href="https://wa.me/201012034239?text=مرحباً%20ZidanCode%20Maestro،%20أرغب%20في%20طلب%20أداة%20مخصصة%20لنشاطي" target="_blank">اطلب أداة مخصصة بالجنيه المصري</a>
-    </section>
-
-    <footer>
-      جميع الحقوق محفوظة © 2026 منظومة ZidanCode Maestro (صوت الأفكار | هندسة بكرة)
-    </footer>
+<div class="hero">
+  <div class="tag">⚡ تعمل أوفلاين 100% بدون اشتراكات شهرية</div>
+  <h1>باقة ZidanCode Suite لأصحاب المتاجر والمسوقين</h1>
+  <p class="sub">5 أدوات احترافية توفر عليك ساعات من الشغل اليدوي وتكشف خسائر الشحن والمرتجعات في ثواني — جرّب كل أداة مجاناً الآن في متصفحك قبل الشراء.</p>
+  <div class="offer">
+    <div>🔥 عرض الإطلاق للباقة الكاملة (الـ 5 أدوات معاً مدى الحياة):</div>
+    <strong>750 ج.م فقط</strong> <span style="text-decoration:line-through;color:#94a3b8;margin-right:8px;">بدلاً من 1,400 ج.م</span>
   </div>
+  <div class="pay-box">
+    <div>💳 <strong>طريقة الاشتراك والتفعيل الفوري:</strong></div>
+    <div>1️⃣ حوّل قيمة الباقة أو الأداة عبر فودافون كاش أو إنستاباي على الرقم المعتمد: <strong style="color:#fbbf24;font-family:monospace;font-size:16px;">01012034239</strong></div>
+    <div>2️⃣ أرسل صورة التحويل + كود بصمة جهازك (يظهر داخل الأداة) إلى واتساب المبيعات والتفعيل: <strong style="color:#4ade80;font-family:monospace;font-size:16px;">01090724210</strong></div>
+    <a class="wa-btn" href="https://wa.me/201090724210?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AA%D9%81%D8%B9%D9%8A%D9%84%20%D8%A8%D8%A7%D9%82%D8%A9%20ZidanCode%20Suite" target="_blank">تواصل مع واتساب المبيعات والتفعيل مباشرة 💬</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="grid">
+    <div class="card">
+      <div>
+        <h3>📱 1. منظف ومفلتر أرقام الواتساب</h3>
+        <p>استخراج وتنظيف آلاف الأرقام، إزالة التكرار تلقائياً، وتصحيح صيغة 2010+ جاهزة لحملات الواتساب وشركات الشحن في ثانية واحدة.</p>
+      </div>
+      <div>
+        <div class="price-row"><span>السعر الفردي: <strong>350 ج.م</strong></span><span>تجربة مجانية متاحة ✅</span></div>
+        <a class="btn" href="whatsapp_leads_cleaner.html">جرّب الأداة مجاناً الآن ⬅️</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div>
+        <h3>💵 2. حاسبة صافي أرباح الدفع عند الاستلام (COD)</h3>
+        <p>احسب صافي ربحك الحقيقي بعد خصم تكلفة المنتج، الإعلانات، الشحن، ونسبة المرتجعات قبل إطلاق أي حملة إعلانية.</p>
+      </div>
+      <div>
+        <div class="price-row"><span>السعر الفردي: <strong>400 ج.م</strong></span><span>تجربة مجانية متاحة ✅</span></div>
+        <a class="btn" href="cod_profit_calculator.html">جرّب الأداة مجاناً الآن ⬅️</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div>
+        <h3>📋 3. منظم ومنسق بيانات العملاء (Leads Formatter)</h3>
+        <p>تحويل رسائل الأوردرات العشوائية (الاسم، العنوان، المحافظة، الموبايل) إلى جدول منظم جاهز للرفع لشركات الشحن بضغطة زر.</p>
+      </div>
+      <div>
+        <div class="price-row"><span>السعر الفردي: <strong>350 ج.م</strong></span><span>تجربة مجانية متاحة ✅</span></div>
+        <a class="btn" href="leads_formatter.html">جرّب الأداة مجاناً الآن ⬅️</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div>
+        <h3>📊 4. منظف ومصلح ملفات CSV للمتاجر</h3>
+        <p>إصلاح مشاكل الترميز العربي (الحروف المقطعة في إكسل) وتنظيف الأعمدة الفارغة لملفات شوبيفاي ووكومرس فوراً.</p>
+      </div>
+      <div>
+        <div class="price-row"><span>السعر الفردي: <strong>350 ج.م</strong></span><span>تجربة مجانية متاحة ✅</span></div>
+        <a class="btn" href="store_csv_cleaner.html">جرّب الأداة مجاناً الآن ⬅️</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div>
+        <h3>🔗 5. مولد ومنظم روابط تتبع الحملات (UTM)</h3>
+        <p>إنشاء روابط تتبع احترافية لإعلانات فيسبوك وتيك توك وجوجل لمعرفة أي إعلان يحقق مبيعات فعلية بدون أخطاء.</p>
+      </div>
+      <div>
+        <div class="price-row"><span>السعر الفردي: <strong>300 ج.م</strong></span><span>تجربة مجانية متاحة ✅</span></div>
+        <a class="btn" href="utm_builder.html">جرّب الأداة مجاناً الآن ⬅️</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  ZidanCode Suite © 2026 — ترخيص مدى الحياة لجهازك • المبيعات والتفعيل: 01090724210 • التحويل المعتمد: 01012034239
+</footer>
 </body>
 </html>

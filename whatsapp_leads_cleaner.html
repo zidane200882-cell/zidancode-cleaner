@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظف ومفلتر أرقام الواتساب الاحترافي | ZidanCode Suite</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151c2c;
+            --bg-card-hover: #1e283d;
+            --border: #2a364f;
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --accent: #38bdf8;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-title h1 {
+            font-size: 1.6rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #4ade80;
+            padding: 14px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+            outline: none;
+            direction: ltr;
+            text-align: left;
+        }
+
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        select, input[type="text"], input[type="number"] {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            padding: 10px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        button.btn-secondary {
+            background: #2563eb;
+        }
+        button.btn-secondary:hover {
+            background: #1d4ed8;
+        }
+
+        button.btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+        button.btn-outline:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--text-muted);
+        }
+
+        button.btn-danger {
+            background: var(--danger);
+        }
+        button.btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .stat-card .num {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .stat-card.total .num { color: var(--accent); }
+        .stat-card.valid .num { color: var(--primary); }
+        .stat-card.dup .num { color: var(--warning); }
+        .stat-card.invalid .num { color: var(--danger); }
+
+        .stat-card .lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            border: 1px solid transparent;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card-hover);
+            color: var(--accent);
+            border-color: var(--border);
+        }
+
+        .output-box {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            height: 250px;
+            overflow-y: auto;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            direction: ltr;
+        }
+
+        .table-list {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-list th, .table-list td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #1a2333;
+        }
+
+        .table-list th {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            position: sticky;
+            top: 0;
+            background: #090d16;
+        }
+
+        .wa-link {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .wa-link:hover {
+            text-decoration: underline;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .drop-zone:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="brand-title">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <h1>منظف ومفلتر أرقام الواتساب للتجارة الإلكترونية</h1>
+                <span class="badge">ZidanCode Suite — أوفلاين 100%</span>
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-muted);">
+                تنسيق تلقائي • إزالة التكرار • تصدير مباشر
+            </div>
+        </header>
+
+        <div class="grid">
+            <!-- Left Side: Input Controls -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>إدخال البيانات والقائمة الخام</h2>
+                    <span id="charCount" style="font-size:0.8rem; color:var(--text-muted);">0 رقم</span>
+                </div>
+
+                <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+                    📁 اسحب ملف (TXT / CSV) هنا أو اضغط للرفع المباشر
+                    <input type="file" id="fileInput" accept=".txt,.csv" style="display:none;" onchange="handleFileSelect(event)">
+                </div>
+
+                <textarea id="rawInput" placeholder="ضع القائمة هنا (سواء أرقام فقط، أو نص ممتلئ بأرقام مثل:&#10;01012345678&#10;+201123456789&#10;أو أي أرقام غير منسقة)..." oninput="updateInputStats()"></textarea>
+
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label>الدولة / كود المفتاح التلقائي</label>
+                        <select id="countryDefault">
+                            <option value="20" selected>مصر (+20)</option>
+                            <option value="966">السعودية (+966)</option>
+                            <option value="971">الإمارات (+971)</option>
+                            <option value="965">الكويت (+965)</option>
+                            <option value="962">الأردن (+962)</option>
+                            <option value="none">بدون إضافة كود (استخراج فقط)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>تنسيق المخرجات النهائي</label>
+                        <select id="outputFormat">
+                            <option value="with_plus">مع علامة بلس (+2010...)</option>
+                            <option value="digits_only" selected>أرقام فقط بدون بلس (2010...)</option>
+                            <option value="local">تنسيق محلي بدائي (010...)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>تقسيم القوائم (حملات)</label>
+                        <input type="number" id="splitBatchSize" placeholder="مثلاً: 500 رقم لكل دفعة" min="10">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button onclick="processNumbers()">⚡ تنظيف وتصفية فورية</button>
+                    <button class="btn-outline btn-danger" onclick="clearAll()">🗑️ مسح الكل</button>
+                </div>
+            </div>
+
+            <!-- Right Side: Results & Export -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>نتائج التصفية والتحليل</h2>
+                    <span id="processStatus" style="font-size:0.8rem; color:var(--primary);">جاهز للعمل</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="lbl">الإجمالي المدخل</div>
+                        <div class="num" id="statTotal">0</div>
+                    </div>
+                    <div class="stat-card valid">
+                        <div class="lbl">أرقام صحيحة</div>
+                        <div class="num" id="statValid">0</div>
+                    </div>
+                    <div class="stat-card dup">
+                        <div class="lbl">مكرر تم حذفه</div>
+                        <div class="num" id="statDup">0</div>
+                    </div>
+                    <div class="stat-card invalid">
+                        <div class="lbl">أرقام خاطئة</div>
+                        <div class="num" id="statInvalid">0</div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('valid')">✅ الصالحة للواتساب (<span id="countValidTab">0</span>)</button>
+                    <button class="tab-btn" onclick="switchTab('dup')">⚠️ المكررة (<span id="countDupTab">0</span>)</button>
+                    <button class="tab-btn" onclick="switchTab('invalid')">❌ الخاطئة (<span id="countInvalidTab">0</span>)</button>
+                </div>
+
+                <div class="output-box" id="outputBox">
+                    <table class="table-list" id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الرقم المنسق</th>
+                                <th>الرقم الأصلي</th>
+                                <th>رابط الواتساب المباشر</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTbody">
+                            <tr>
+                                <td colspan="4" style="text-align:center; color:var(--text-muted); padding:30px;">
+                                    اضغط على "تنظيف وتصفية فورية" لمعالجة الأرقام وعرض النتائج هنا.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-secondary" onclick="copyValidNumbers()">📋 نسخ الأرقام النظيفة</button>
+                    <button class="btn-outline" onclick="copyWaLinks()">🔗 نسخ روابط الواتساب</button>
+                    <button class="btn-outline" onclick="exportCSV()">📊 تصدير Excel / CSV</button>
+                    <button class="btn-outline" onclick="exportTXT()">📁 تصدير ملف TXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">تمت العملية بنجاح!</div>
+
+    <script>
+        let processedData = {
+            valid: [],
+            duplicates: [],
+            invalid: []
+        };
+        let currentTab = 'valid';
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function updateInputStats() {
+            const text = document.getElementById('rawInput').value;
+            const lines = text.split('\n').filter(l => l.trim() !== '');
+            document.getElementById('charCount').innerText = `${lines.length} سطر / إدخال`;
+        }
+
+        function handleFileSelect(evt) {
+            const file = evt.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('rawInput').value = e.target.result;
+                updateInputStats();
+                showToast(`تم تحميل الملف: ${file.name}`);
+            };
+            reader.readAsText(file);
+        }
+
+        const dropZone = document.getElementById('dropZone');
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--primary)'; });
+        dropZone.addEventListener('dragleave', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--border)'; });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border)';
+            if (e.dataTransfer.files.length > 0) {
+                document.getElementById('fileInput').files = e.dataTransfer.files;
+                handleFileSelect({ target: { files: e.dataTransfer.files } });
+            }
+        });
+
+        function cleanPhoneNumber(raw, defaultCountry, formatStyle) {
+            let digits = raw.replace(/\D/g, '');
+            if (!digits || digits.length < 7) return null;
+
+            if (defaultCountry === '20') {
+                if (digits.startsWith('0020')) {
+                    digits = digits.substring(4);
+                } else if (digits.startsWith('20')) {
+                    digits = digits.substring(2);
+                } else if (digits.startsWith('01')) {
+                    digits = digits;
+                }
+
+                if (digits.startsWith('01') && digits.length === 11) {
+                    digits = '20' + digits.substring(1);
+                } else if (digits.length === 10 && ['10','11','12','15'].includes(digits.substring(0,2))) {
+                    digits = '20' + digits;
+                } else if (digits.startsWith('201') && digits.length === 12) {
+                    // Valid
+                } else {
+                    if (digits.length === 11 && digits.startsWith('01')) {
+                        digits = '20' + digits.substring(1);
+                    }
+                }
+            } else if (defaultCountry === '966') {
+                if (digits.startsWith('00966')) digits = digits.substring(5);
+                else if (digits.startsWith('966')) digits = digits.substring(3);
+                else if (digits.startsWith('05')) digits = '966' + digits.substring(1);
+                else if (digits.startsWith('5') && digits.length === 9) digits = '966' + digits;
+            } else if (defaultCountry !== 'none') {
+                if (digits.startsWith('00' + defaultCountry)) digits = digits.substring(2 + defaultCountry.length);
+                else if (digits.startsWith('0') && !digits.startsWith(defaultCountry)) digits = defaultCountry + digits.substring(1);
+                else if (!digits.startsWith(defaultCountry) && digits.length <= 10) digits = defaultCountry + digits;
+            }
+
+            if (digits.length < 8 || digits.length > 15) return null;
+
+            if (formatStyle === 'with_plus') return '+' + digits;
+            if (formatStyle === 'local' && digits.startsWith('201')) return '0' + digits.substring(2);
+            return digits;
+        }
+
+        function processNumbers() {
+            const rawText = document.getElementById('rawInput').value;
+            const defaultCountry = document.getElementById('countryDefault').value;
+            const formatStyle = document.getElementById('outputFormat').value;
+
+            if (!rawText.trim()) {
+                showToast('⚠️ يرجى إدخال أرقام أولاً في المربع!');
+                return;
+            }
+
+            const lines = rawText.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+
+            processedData = { valid: [], duplicates: [], invalid: [] };
+            const seen = new Set();
+
+            lines.forEach((original) => {
+                const cleaned = cleanPhoneNumber(original, defaultCountry, formatStyle);
+
+                if (!cleaned) {
+                    processedData.invalid.push({ original, reason: 'طول غير صحيح أو صيغة مجهولة' });
+                } else {
+                    const cleanDigitsForDupCheck = cleaned.replace(/\D/g, '');
+                    if (seen.has(cleanDigitsForDupCheck)) {
+                        processedData.duplicates.push({ original, formatted: cleaned });
+                    } else {
+                        seen.add(cleanDigitsForDupCheck);
+                        const waDigits = cleanDigitsForDupCheck.startsWith('01') ? '20' + cleanDigitsForDupCheck.substring(1) : cleanDigitsForDupCheck;
+                        processedData.valid.push({
+                            original,
+                            formatted: cleaned,
+                            waLink: `https://wa.me/${waDigits}`
+                        });
+                    }
+                }
+            });
+
+            document.getElementById('statTotal').innerText = lines.length;
+            document.getElementById('statValid').innerText = processedData.valid.length;
+            document.getElementById('statDup').innerText = processedData.duplicates.length;
+            document.getElementById('statInvalid').innerText = processedData.invalid.length;
+
+            document.getElementById('countValidTab').innerText = processedData.valid.length;
+            document.getElementById('countDupTab').innerText = processedData.duplicates.length;
+            document.getElementById('countInvalidTab').innerText = processedData.invalid.length;
+
+            renderTable();
+            showToast(`✅ اكتملت التصفية: ${processedData.valid.length} رقم صالح جاهز!`);
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('resultsTbody');
+            tbody.innerHTML = '';
+
+            const items = processedData[currentTab];
+            if (!items || items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:30px;">لا توجد بيانات لهذه الفئة.</td></tr>`;
+                return;
+            }
+
+            items.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                if (currentTab === 'valid') {
+                    tr.innerHTML = `
+                        <td>${idx + 1}</td>
+                        <td style="color:#4ade80; font-weight:600;">${item.formatted}</td>
+                        <td style="color:var(--text-muted);">${item.original}</td>
+                        <td><a href="${item.waLink}" target="_blank" class="wa-link">📱 فتح الدردشة</a></td>
+                    `;
+                } else if (currentTab === 'dup') {
+                    tr.innerHTML = `
+                        <td>${idx + 1}</td>
+                        <td style="color:var(--warning);">${item.formatted}</td>
+                        <td style="color:var(--text-muted);">${item.original}</td>
+                        <td><span style="color:var(--warning);">مكرر (تم استبعاده)</span></td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td>${idx + 1}</td>
+                        <td style="color:var(--danger);">${item.original}</td>
+                        <td style="color:var(--text-muted);">${item.reason}</td>
+                        <td><span style="color:var(--danger);">غير صالح</span></td>
+                    `;
+                }
+                tbody.appendChild(tr);
+            });
+        }
+
+        function copyValidNumbers() {
+            if (processedData.valid.length === 0) {
+                showToast('⚠️ لا توجد أرقام صالحة للنسخ!');
+                return;
+            }
+            const textToCopy = processedData.valid.map(i => i.formatted).join('\n');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`📋 تم نسخ ${processedData.valid.length} رقم بنجاح إلى الحافظة!`);
+            });
+        }
+
+        function copyWaLinks() {
+            if (processedData.valid.length === 0) {
+                showToast('⚠️ لا توجد روابط صالحة للنسخ!');
+                return;
+            }
+            const textToCopy = processedData.valid.map(i => i.waLink).join('\n');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`🔗 تم نسخ ${processedData.valid.length} رابط واتساب مباشر!`);
+            });
+        }
+
+        function exportCSV() {
+            if (processedData.valid.length === 0) {
+                showToast('⚠️ لا توجد بيانات للتصدير!');
+                return;
+            }
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "#,الرقم المنسق,الرقم الأصلي,رابط الواتساب\n";
+
+            processedData.valid.forEach((item, index) => {
+                csvContent += `${index + 1},"${item.formatted}","${item.original}","${item.waLink}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `WhatsApp_Numbers_Cleaned_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('📊 تم تصدير ملف Excel / CSV بنجاح!');
+        }
+
+        function exportTXT() {
+            if (processedData.valid.length === 0) {
+                showToast('⚠️ لا توجد بيانات للتصدير!');
+                return;
+            }
+            const text = processedData.valid.map(i => i.formatted).join('\n');
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Clean_WhatsApp_List_${new Date().toISOString().slice(0,10)}.txt`;
+            link.click();
+            showToast('📁 تم تحميل ملف TXT بنجاح!');
+        }
+
+        function clearAll() {
+            document.getElementById('rawInput').value = '';
+            processedData = { valid: [], duplicates: [], invalid: [] };
+            document.getElementById('statTotal').innerText = '0';
+            document.getElementById('statValid').innerText = '0';
+            document.getElementById('statDup').innerText = '0';
+            document.getElementById('statInvalid').innerText = '0';
+            document.getElementById('countValidTab').innerText = '0';
+            document.getElementById('countDupTab').innerText = '0';
+            document.getElementById('countInvalidTab').innerText = '0';
+            updateInputStats();
+            renderTable();
+            showToast('🗑️ تم مسح كافة البيانات والتنظيف.');
+        }
+    </script>
+
+    <style>
+      #zcDemoBanner {
+        position: fixed; bottom: 0; left: 0; right: 0; background: #0f172a; border-top: 2px solid #38bdf8;
+        color: #f8fafc; padding: 10px 18px; display: flex; align-items: center; justify-content: space-between;
+        z-index: 999998; font-family: Tahoma, sans-serif; direction: rtl; box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
+      }
+      #zcDemoBanner button {
+        background: #16a34a; color: #fff; border: none; padding: 8px 16px; border-radius: 8px;
+        font-weight: bold; cursor: pointer; font-size: 14px;
+      }
+      #zcUnlockModal {
+        display: none; position: fixed; inset: 0; background: rgba(7,13,25,0.92); z-index: 999999;
+        align-items: center; justify-content: center; font-family: Tahoma, sans-serif; direction: rtl;
+      }
+      .zc-box {
+        background: #0f172a; border: 2px solid #38bdf8; border-radius: 14px; padding: 24px;
+        max-width: 440px; width: 92%; text-align: center; color: #f8fafc;
+      }
+    </style>
+    <div id="zcDemoBanner">
+      <span>🧪 <b>وضع التجربة المجانية (Demo):</b> يمكنك تجربة الأداة الآن — النسخة الكاملة بـ <b>350 ج.م</b></span>
+      <button onclick="openZcUnlock()">🔓 تفعيل النسخة الكاملة</button>
+    </div>
+    <div id="zcUnlockModal">
+      <div class="zc-box">
+        <h3 style="color:#38bdf8;margin-top:0;">🔑 تفعيل النسخة الكاملة مدى الحياة</h3>
+        <p style="font-size:13px;color:#cbd5e1;">ابعت كود بصمة جهازك على واتساب <b>+201090724210</b> لاستلام مفتاح التفعيل:</p>
+        <div id="zcDevShow" style="background:#070d19;border:1px dashed #fbbf24;color:#fbbf24;padding:8px;border-radius:6px;font-family:monospace;font-size:16px;margin:10px 0;user-select:all;"></div>
+        <input id="zcKeyField" type="text" placeholder="ZC-XXXX-XXXX-XXXX" style="width:92%;padding:10px;border-radius:6px;border:1px solid #475569;background:#070d19;color:#4ade80;text-align:center;font-family:monospace;font-size:15px;margin-bottom:10px;">
+        <div style="display:flex;gap:8px;">
+          <button onclick="activateZcNow()" style="flex:1;background:#0284c7;color:#fff;border:none;padding:10px;border-radius:6px;font-weight:bold;cursor:pointer;">تفعيل الآن ✅</button>
+          <button onclick="document.getElementById('zcUnlockModal').style.display='none'" style="background:#334155;color:#fff;border:none;padding:10px 14px;border-radius:6px;cursor:pointer;">إغلاق</button>
+        </div>
+        <p id="zcStatusTxt" style="color:#f87171;font-size:12px;margin-top:8px;"></p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.onkeydown = e => { if (e.keyCode == 123) return false; };
+      (async function() {
+        const prodCode = "WHATSAPP_LEADS_CLEANER";
+        let devId = localStorage.getItem('zc_dev_id');
+        if (!devId) {
+          devId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+          localStorage.setItem('zc_dev_id', devId);
+        }
+        document.getElementById('zcDevShow').textContent = devId;
+
+        const enc = new TextEncoder();
+        const key = await crypto.subtle.importKey('raw', enc.encode('ZidanCode_Master_Secret_2026_ADL'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+        const sig = await crypto.subtle.sign('HMAC', key, enc.encode(devId + ':' + prodCode));
+        const hex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+        const expectedKey = 'ZC-' + hex.slice(0,4) + '-' + hex.slice(4,8) + '-' + hex.slice(8,12);
+
+        window.ZC_IS_PRO = (localStorage.getItem('Zidan_Key_' + prodCode) === expectedKey);
+        if (window.ZC_IS_PRO) {
+          document.getElementById('zcDemoBanner').style.display = 'none';
+        } else {
+          document.addEventListener('click', function(e) {
+            const btn = e.target.closest('button');
+            if (btn && !window.ZC_IS_PRO && /تصدير|تحميل|excel|csv|export|download|نسخ/i.test(btn.textContent)) {
+              e.stopImmediatePropagation();
+              e.preventDefault();
+              openZcUnlock();
+            }
+          }, true);
+        }
+
+        window.openZcUnlock = function() {
+          document.getElementById('zcUnlockModal').style.display = 'flex';
+        };
+
+        window.activateZcNow = function() {
+          const val = document.getElementById('zcKeyField').value.trim().toUpperCase();
+          if (val === expectedKey) {
+            localStorage.setItem('Zidan_Key_' + prodCode, expectedKey);
+            window.ZC_IS_PRO = true;
+            document.getElementById('zcUnlockModal').style.display = 'none';
+            document.getElementById('zcDemoBanner').style.display = 'none';
+            alert('✅ تم تفعيل النسخة الكاملة بنجاح!');
+          } else {
+            document.getElementById('zcStatusTxt').textContent = '⚠️ مفتاح التفعيل غير صحيح لهذا الجهاز.';
+          }
+        };
+      })();
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,37 @@
+[
+    {
+        "tool": "whatsapp_leads_cleaner.html",
+        "product_code": "WHATSAPP_LEADS_CLEANER",
+        "price_egp": 350,
+        "status": "READY",
+        "timestamp": "2026-11-23 12:48:26"
+    },
+    {
+        "tool": "leads_formatter.html",
+        "product_code": "LEADS_FORMATTER",
+        "price_egp": 350,
+        "status": "READY",
+        "timestamp": "2026-11-23 13:06:17"
+    },
+    {
+        "tool": "cod_profit_calculator.html",
+        "product_code": "COD_PROFIT_CALCULATOR",
+        "price_egp": 350,
+        "status": "READY",
+        "timestamp": "2026-11-23 13:07:14"
+    },
+    {
+        "tool": "store_csv_cleaner.html",
+        "product_code": "STORE_CSV_CLEANER",
+        "price_egp": 350,
+        "status": "READY",
+        "timestamp": "2026-11-23 13:08:49"
+    },
+    {
+        "tool": "utm_builder.html",
+        "product_code": "UTM_BUILDER",
+        "price_egp": 350,
+        "status": "READY",
+        "timestamp": "2026-11-23 13:09:41"
+    }
+]
